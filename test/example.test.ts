@@ -1,6 +1,6 @@
 import { expect } from 'chai';
 
-import { add } from '../src/adder';
+import { add } from 'src/adder';
 
 describe("example", function() {
   it("should add numbers", function() {
