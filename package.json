@@ -1,8 +1,31 @@
 {
   "name": "json-storage",
   "version": "0.0.1",
-  "main": "lib/index.ts",
+  "description": "Wrapper around localStorage for storing json data.",
+  "repository": {
+    "url": "https://github.com/billnreed/json-storage",
+    "type": "git"
+  },
+  "keywords": [
+    "localStorage",
+    "json",
+    "storage",
+    "browser"
+  ],
+  "homepage": "https://github.com/billnreed/json-storage",
+  "bugs": "https://github.com/billnreed/json-storage/issues",
+  "author": "Bill Reed <billnreed@gmail.com>",
   "license": "MIT",
+  "main": "lib/index.ts",
+  "files": [
+    "lib/index.ts",
+    "src/invalid-value-type-error.ts",
+    "src/missing-key-error.ts",
+    "src/json-storage.ts"
+  ],
+  "scripts": {
+    "test": "karma start --single-run"
+  },
   "devDependencies": {
     "@types/chai": "^4.0.4",
     "@types/mocha": "^2.2.43",
@@ -15,8 +38,5 @@
     "karma-typescript": "^3.0.7",
     "mocha": "^4.0.1",
     "typescript": "^2.5.3"
-  },
-  "scripts": {
-    "test": "karma start --single-run"
   }
 }
