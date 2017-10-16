@@ -1,5 +1,5 @@
-import { InvalidValueTypeError } from 'src/invalid-value-type-error';
-import { MissingKeyError } from 'src/missing-key-error';
+import { InvalidValueTypeError } from './invalid-value-type-error';
+import { MissingKeyError } from './missing-key-error';
 
 export class JsonStorage {
   private store: { [index:string]: any };

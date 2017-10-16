@@ -2,14 +2,7 @@
   "compilerOptions": {
       "module": "commonjs",
       "noImplicitAny": true,
-      "removeComments": true,
-      "preserveConstEnums": true,
-      "sourceMap": true,
-      "baseUrl": "./",
-      "paths": {
-        "src": ["./src"],
-        "test": ["./test"]
-      }
+      "removeComments": true
   },
   "include": [
     "src/**/*.ts",
