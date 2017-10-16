@@ -5,6 +5,10 @@ import { InvalidValueTypeError } from 'src/invalid-value-type-error';
 import { MissingKeyError } from 'src/missing-key-error';
 
 describe('JsonStorage', function() {
+  afterEach(function() {
+    window.localStorage.clear();
+  });
+
   describe('setting and getting valid values', function() {
     let jsonStorage: JsonStorage;
 
@@ -100,11 +104,29 @@ describe('JsonStorage', function() {
     });
   });
 
-  describe('loading existing data', function() {
-    
-  });
-
   describe('having multiple stores', function() {
+    describe('with the same storage key', function() {
+      it('load existing data on initialization', function() {
+        const firstJsonStorage = new JsonStorage();
+        firstJsonStorage.set('number', 1);
 
+        const secondJsonStorage = new JsonStorage();
+        expect(secondJsonStorage.get('number')).to.equal(1);
+      });
+
+      it('share data', function() {
+        const firstJsonStorage = new JsonStorage();
+        const secondJsonStorage = new JsonStorage();
+
+        firstJsonStorage.set('number', 1);
+        secondJsonStorage.set('number', secondJsonStorage.get('number') + 1);
+        
+        expect(firstJsonStorage.get('number')).to.equal(2);
+      });
+    });
+
+    describe('with different storage keys', function() {
+
+    });
   });
 });

@@ -2,12 +2,13 @@ import { InvalidValueTypeError } from 'src/invalid-value-type-error';
 import { MissingKeyError } from 'src/missing-key-error';
 
 export class JsonStorage {
-  public length: number;
   private store: { [index:string]: any };
+
   private localStorage: Storage;
+  private storageKey: string;
 
   constructor() {
-    this.store = {};
+    this.storageKey = '_localStorage';
     this.localStorage = window.localStorage;
 
     this.initStore();
@@ -47,15 +48,15 @@ export class JsonStorage {
   }
 
   private initStore() {
-    this.store = {};
+    this.store = JSON.parse(this.localStorage.getItem(this.storageKey)) || {};
     this.saveStore();
   }
 
   private saveStore() {
-    this.localStorage.setItem("_jsonStorage", JSON.stringify(this.store));
+    this.localStorage.setItem(this.storageKey, JSON.stringify(this.store));
   }
 
   private restoreStore() {
-    this.store = JSON.parse(this.localStorage.getItem("_jsonStorage"));
+    this.store = JSON.parse(this.localStorage.getItem(this.storageKey));
   }
 }
