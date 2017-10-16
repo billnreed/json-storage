@@ -1,13 +1,80 @@
 import { expect } from 'chai';
 
-import { add } from 'src/adder';
+import { JsonStorage } from 'src/json-storage';
+import { InvalidValueTypeError } from 'src/invalid-value-type-error';
 
-describe("example", function() {
-  it("should add numbers", function() {
-    expect(add(2, 2)).to.equal(4);
+describe('JsonStorage', function() {
+  describe('setting and getting valid values', function() {
+    let jsonStorage: JsonStorage;
+
+    beforeEach(function() {
+      jsonStorage = new JsonStorage()
+    });
+
+    it('can set and retrieve a string', function() {
+      jsonStorage.set('hello', 'world');
+
+      expect(jsonStorage.get('hello')).to.equal('world');
+    });
+
+    it('can set and retrieve a number', function() {
+      jsonStorage.set('one', 1);
+
+      expect(jsonStorage.get('one')).to.equal(1);
+    });
+
+    it('can set and retrieve an array', function() {
+      jsonStorage.set('array', [1, 2, 3]);
+
+      expect(jsonStorage.get('array')).to.include.ordered.members([1, 2, 3]);
+    });
+
+    it('can set and retrieve an object', function() {
+      jsonStorage.set('object', { one: 'one' });
+
+      expect(jsonStorage.get('object')).to.deep.equal({ one: 'one' });
+    });
+
+    it('can set and retrieve a boolean', function() {
+      jsonStorage.set('boolean', true);
+
+      expect(jsonStorage.get('boolean')).to.be.true;
+    });
+
+    it('overwrites an existing value when setting it again', function() {
+      jsonStorage.set('number', 1);
+      jsonStorage.set('number', 2);
+
+      expect(jsonStorage.get('number')).to.equal(2);
+    });
   });
 
-  it("should subtract numbers", function() {
-    expect(add(2, 0)).to.equal(2);
+  describe('setting invalid values', function() {
+    it('cannot set a function value', function() {
+      const jsonStorage = new JsonStorage();
+      const expectedError = new InvalidValueTypeError(() => {})
+
+      expect(() => jsonStorage.set("function", () => {})).to.throw(expectedError.message);
+    });
+  });
+
+  describe('getting non-existant keys', function() {
+    it('returns undefined for any non-existant keys', function() {
+      const jsonStorage = new JsonStorage();
+
+      expect(jsonStorage.get('something')).to.be.undefined;
+    });
+  });
+
+  describe('loading existing data', function() {
+    
+  });
+
+  describe('having multiple stores', function() {
+
+  });
+
+  describe('clearing the store', function() {
+
   });
 });
