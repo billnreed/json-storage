@@ -1,7 +1,7 @@
 {
   "name": "json-storage",
   "version": "0.0.1",
-  "main": "src/json-storage.js",
+  "main": "lib/index.ts",
   "license": "MIT",
   "devDependencies": {
     "@types/chai": "^4.0.4",

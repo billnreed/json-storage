@@ -5,6 +5,7 @@
       "removeComments": true
   },
   "include": [
+    "lib/index.ts",
     "src/**/*.ts",
     "test/**/*.test.ts"
   ],

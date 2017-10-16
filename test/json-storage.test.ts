@@ -1,8 +1,6 @@
 import { expect } from 'chai';
 
-import { JsonStorage } from '../src/json-storage';
-import { InvalidValueTypeError } from '../src/invalid-value-type-error';
-import { MissingKeyError } from '../src/missing-key-error';
+import { JsonStorage, InvalidValueTypeError, MissingKeyError } from '../lib/index';
 
 describe('JsonStorage', function() {
   afterEach(function() {
