@@ -1,4 +1,5 @@
 import { InvalidValueTypeError } from 'src/invalid-value-type-error';
+import { MissingKeyError } from 'src/missing-key-error';
 
 export class JsonStorage {
   public length: number;
@@ -14,6 +15,10 @@ export class JsonStorage {
 
   public get(key: string) {
     this.restoreStore();
+    if (this.store[key] == undefined) {
+      throw new MissingKeyError(key);
+    }
+
     return this.store[key];
   }
 
@@ -27,11 +32,18 @@ export class JsonStorage {
   }
 
   public remove(key: string): void {
-    throw new Error("Method not implemented.");
+    this.restoreStore();
+    if (this.store[key] == undefined) {
+      throw new MissingKeyError(key);
+    }
+
+    delete this.store[key];
+    this.saveStore();
   }
 
   public clear(): void {
-    throw new Error("Method not implemented.");
+    this.store = {};
+    this.saveStore();
   }
 
   private initStore() {

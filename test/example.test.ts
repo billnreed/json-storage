@@ -2,6 +2,7 @@ import { expect } from 'chai';
 
 import { JsonStorage } from 'src/json-storage';
 import { InvalidValueTypeError } from 'src/invalid-value-type-error';
+import { MissingKeyError } from 'src/missing-key-error';
 
 describe('JsonStorage', function() {
   describe('setting and getting valid values', function() {
@@ -58,11 +59,44 @@ describe('JsonStorage', function() {
     });
   });
 
-  describe('getting non-existant keys', function() {
-    it('returns undefined for any non-existant keys', function() {
+  describe('getting missing keys', function() {
+    it('throws a missing key error', function() {
       const jsonStorage = new JsonStorage();
+      const expectedError = new MissingKeyError('missingKey');
 
-      expect(jsonStorage.get('something')).to.be.undefined;
+      expect(() => jsonStorage.get('missingKey')).to.throw(expectedError.message);
+    });
+  });
+
+  describe('removing keys', function() {
+    it('removes an existing key and its value', function() {
+      const jsonStorage = new JsonStorage();
+      const expectedError = new MissingKeyError('number');
+
+      jsonStorage.set('number', 1);
+      jsonStorage.remove('number');
+
+      expect(() => jsonStorage.get('number')).to.throw(expectedError.message);
+    });
+
+    it('throws a missing key error when the key does not exist', function() {
+      const jsonStorage = new JsonStorage();
+      const expectedError = new MissingKeyError('missingKey');
+
+      expect(() => jsonStorage.remove('missingKey')).to.throw(expectedError.message);
+    });
+  });
+
+  describe('clearing the store', function() {
+    it('removes all the keys and values from the store', function() {
+      const jsonStorage = new JsonStorage();
+      const expectedError = new MissingKeyError('number');
+
+      jsonStorage.set("number", 1);
+
+      jsonStorage.clear();
+
+      expect(() => jsonStorage.get("number")).to.throw(expectedError.message);
     });
   });
 
@@ -71,10 +105,6 @@ describe('JsonStorage', function() {
   });
 
   describe('having multiple stores', function() {
-
-  });
-
-  describe('clearing the store', function() {
 
   });
 });
