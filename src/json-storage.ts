@@ -7,8 +7,8 @@ export class JsonStorage {
   private localStorage: Storage;
   private storageKey: string;
 
-  constructor() {
-    this.storageKey = '_localStorage';
+  constructor(storageKey='_localStorage') {
+    this.storageKey = storageKey;
     this.localStorage = window.localStorage;
 
     this.initStore();

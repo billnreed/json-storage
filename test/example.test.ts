@@ -59,7 +59,7 @@ describe('JsonStorage', function() {
       const jsonStorage = new JsonStorage();
       const expectedError = new InvalidValueTypeError(() => {})
 
-      expect(() => jsonStorage.set("function", () => {})).to.throw(expectedError.message);
+      expect(() => jsonStorage.set('function', () => {})).to.throw(expectedError.message);
     });
   });
 
@@ -96,17 +96,17 @@ describe('JsonStorage', function() {
       const jsonStorage = new JsonStorage();
       const expectedError = new MissingKeyError('number');
 
-      jsonStorage.set("number", 1);
+      jsonStorage.set('number', 1);
 
       jsonStorage.clear();
 
-      expect(() => jsonStorage.get("number")).to.throw(expectedError.message);
+      expect(() => jsonStorage.get('number')).to.throw(expectedError.message);
     });
   });
 
   describe('having multiple stores', function() {
     describe('with the same storage key', function() {
-      it('load existing data on initialization', function() {
+      it('loads existing data on initialization', function() {
         const firstJsonStorage = new JsonStorage();
         firstJsonStorage.set('number', 1);
 
@@ -114,7 +114,7 @@ describe('JsonStorage', function() {
         expect(secondJsonStorage.get('number')).to.equal(1);
       });
 
-      it('share data', function() {
+      it('shares data', function() {
         const firstJsonStorage = new JsonStorage();
         const secondJsonStorage = new JsonStorage();
 
@@ -126,7 +126,15 @@ describe('JsonStorage', function() {
     });
 
     describe('with different storage keys', function() {
+      it('cannot access another stores data', function() {
+        const firstJsonStorage = new JsonStorage('storageOne');
+        const secondJsonStorage = new JsonStorage('storageTwo');
+        const expectedError = new MissingKeyError('number');
 
+        firstJsonStorage.set('number', 1);
+
+        expect(() => secondJsonStorage.get('number')).to.throw(expectedError.message);
+      });
     });
   });
 });
